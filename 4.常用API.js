@@ -94,7 +94,37 @@
             if(UIManager.setLayoutAnimationEnabledExperimental){
                UIManager.setLayoutAnimationEnabledExperimental(true)
             }
+               
          }
+
+    
+    Animated
+        该API是RN提供的另一种动画方式，相较于 LayoutAnimation 它更为精细，可以只作为单个组件的单个属性，也可以更加手势的响应
+         来设定动画（例如通过手势放大图片等行为），甚至可以将多个动画变化组合到一起，并可以根据条件中断或者修改。
+         
+         const [opacity, setOpacity] = useState(new Animated.Value(1));
+
+         const animated = Animated.timing({
+             opacity,  // 第一个值是要针对那个属性应用动画
+             {
+             }
+         }); // 定义动画
+         animated.start(); // 设置动画
+
+         <Animated.View>  // 必须使用 Animated.View 组件进行包裹
+            <view></view>
+         </Animated.View>
+
+         Animated中的属性
+               decay:  衰减动画，以一个初始速度开始并且逐渐减慢停止
+               spring: 弹跳动画，基于阻尼谐振动的弹性动画
+               timing: 渐变动画，按照线性函数执行的动画
+               parallel: 并行执行
+               sequence: 顺序执行
+               stagger: 错峰执行，其实就是插入 delay 的 parallel 动画
+               查看官网怎么使用
+
+        animated.start(()=>{}); // 设置动画时可以传入一个回调函数，动画结束时执行该回调函数
             
 
 
