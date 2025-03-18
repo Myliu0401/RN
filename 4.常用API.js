@@ -125,7 +125,83 @@
                查看官网怎么使用
 
         animated.start(()=>{}); // 设置动画时可以传入一个回调函数，动画结束时执行该回调函数
-            
+
+        例子：
+          import React, { useState } from 'react;
+          import { Animated, Text, View, StyleSheet, Button, Easing } from 'react-nactive;
+
+          const App = ()=>{
+              const [fadeInValue, setFadeInValue] = useState(new Animated.Value(0));
+              
+              const faDeIn = ()=>{
+                  Animated.timing(fadeInValue, {
+                     toValue: 1,
+                     diration: 2000,
+                     easing: Easing.linear,
+                     useNativeDriver: true
+                  }).start();
+              };
+
+              const fadeOut = ()=>{
+                 Animated.timing(fadeInValue, {
+                   toValue: 0,
+                   duration: 3000,
+                   useNativeDriver: true
+                 }).start();
+              };
+
+              return (<View style={styles.container}>
+                 <Animated.View style={[
+                   styles.fadingContainer,
+                   {
+                      opacity: fadeInValue
+                   }
+                 ]}> 
+                   <Text style={ styles.fadingText }>Fading View!</Text>
+                 </Animated.View>
+                 <View style={ styles.fadingText }>
+                   <Button title="Fade In View" onPress={fadeIn}/>
+                   <Button title="Fade Out View" onPress={fadeOut} />
+                 </View>
+              </View>)
+
+              样式值必须应用在 Animated.View 组件上
+ 
+          }
+
+
+         export default class AnimatedTiming extends Component{
+           constructor(props){
+              super(props);
+              this.state = {
+                 bounceValue: new Animated.Value(0),
+                 rotateValue: new Animated.Value(0)
+              }
+           }
+
+           onPress(){
+
+             // 顺序执行
+             Animated.sequence([
+                Animated.spring(this.state.bounceValue, { toValue: 1, useNativeDriver: true }), // 弹性动画
+                Animated.delay(500),
+                Animated.timing(this.state.rotateValue, {
+                     toValue: 1,
+                     duration: 800,
+                     easing: Easing.out(Easing.quad),
+                     useNativerDriver: true
+                })
+             ]).start(()=>this.onPress); // 开始执行动画
+           }
+
+           render(){
+              return (<View style={styles.container}>
+                <Animated.View>
+                     
+                </Animated.View>
+              </View>)
+           }
+         }
 
 
 */
